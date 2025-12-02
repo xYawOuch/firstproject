@@ -1,48 +1,36 @@
-<!DOCTYPE html>
-<html>
+@extends('layouts.auth')
 
-<head>
-    <title>Login - Payroll System</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-</head>
+@section('title', 'Login - yawOuch')
+@section('card_title', 'Login')
+@section('card_sub', '')
 
-<body class="bg-light">
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-4">
+@section('card_body')
+    @if($errors->any())
+        <div class="alert alert-danger text-center">{{ $errors->first() }}</div>
+    @endif
 
-                <div class="card shadow">
-                    <div class="card-header text-center bg-primary text-white">
-                        <h4>Payroll System Login</h4>
-                    </div>
-                    <div class="card-body">
-
-                        @if($errors->any())
-                            <div class="alert alert-danger">{{ $errors->first() }}</div>
-                        @endif
-
-                        <form method="POST" action="/login">
-                            @csrf
-
-                            <div class="mb-3">
-                                <label>Email</label>
-                                <input type="email" name="email" class="form-control" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label>Password</label>
-                                <input type="password" name="password" class="form-control" required>
-                            </div>
-
-                            <button class="btn btn-primary w-100">Login</button>
-                        </form>
-
-                    </div>
-                </div>
-
-            </div>
+    <form method="POST" action="{{ url('/login') }}">
+        @csrf
+        <div class="mb-3">
+            <label for="id" class="form-label">User ID</label>
+            <input id="id" name="id" class="form-control" inputmode="numeric" pattern="\d*" maxlength="12"
+                placeholder="Enter your ID" autocomplete="username" required
+                oninput="this.value=this.value.replace(/\D/g,'')">
         </div>
-    </div>
-</body>
 
-</html>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password"
+                required>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Login</button>
+    </form>
+
+    <div class="text-center mt-3">
+        <p class="mb-1 text-muted">Don't have an account?</p>
+        <a href="{{ url('/register') }}" class="btn btn-outline-light btn-sm">Register</a>
+    </div>
+
+    <div class="text-center mt-3"><small>&copy; {{ date('Y') }}</small></div>
+@endsection
