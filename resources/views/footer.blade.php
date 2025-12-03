@@ -1,0 +1,1 @@
+<div class="text-center mt-3"><img src="{{ asset('images/yawouch2.png') }}" class="logo"><small>&copy; {{ date('Y') }}</small></div>

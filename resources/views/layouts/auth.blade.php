@@ -6,32 +6,37 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>@yield('title')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Exo+2:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
     <style>
         /* all your shared CSS variables, theme rules and styles */
         :root {
-            --bg: #0f1224;
-            --card: #1b1b2f;
-            --muted: #aeb0c3;
-            --primary-1: #6b4eff;
-            --primary-2: #9c6fff;
-            --accent: #00d6a5;
-            --input-bg: #26283a;
-            --text: #fff;
+            --bg: #0a0e1a;
+            --card: #0f1520;
+            --muted: #a8b5c8;
+            --primary-1: #001a33;
+            /* dark navy */
+            --primary-2: #00bfff;
+            /* bright cyan */
+            --accent: #00d4ff;
+            --input-bg: #111d2e;
+            --text: #e8ecf5;
             --header-text: #fff;
-            --btn-outline: rgba(255, 255, 255, 0.15);
+            --btn-outline: rgba(232, 236, 245, 0.08);
         }
 
         [data-theme="light"] {
-            --bg: #f4f6f9;
-            --card: #fff;
-            --muted: #6b7280;
-            --primary-1: #4f46e5;
-            --primary-2: #7c3aed;
-            --accent: #06b6d4;
-            --input-bg: #f1f5f9;
-            --text: #0f1724;
+            --bg: #f0f4fa;
+            --card: #fafbfd;
+            --muted: #4a5f7f;
+            --primary-1: #003d7a;
+            --primary-2: #0099cc;
+            --accent: #0088bb;
+            --input-bg: #f5f8fc;
+            --text: #0a0e1a;
             --header-text: #fff;
-            --btn-outline: rgba(15, 23, 36, 0.08);
+            --btn-outline: rgba(10, 14, 26, 0.06);
         }
 
         html,
@@ -40,9 +45,9 @@
         }
 
         body {
-            background: var(--bg);
+            background: radial-gradient(circle at 12% 12%, rgba(0, 191, 255, 0.04), transparent 6%), var(--bg);
             color: var(--text);
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Exo 2', sans-serif;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -50,16 +55,26 @@
             margin: 0
         }
 
+        .title .main {
+            font-family: 'Orbitron', sans-serif !important;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .title .sub {
+            font-family: 'Exo 2', sans-serif !important;
+        }
+
         .card {
             background: var(--card);
             border: none;
             border-radius: 15px;
-            box-shadow: 0 12px 30px rgba(3, 6, 23, 0.6);
+            box-shadow: 0 12px 30px rgba(0, 20, 40, 0.6), 0 4px 18px rgba(0, 191, 255, 0.06);
             max-width: 420px
         }
 
         .card-header {
-            background: linear-gradient(90deg, var(--primary-1), var(--primary-2));
+            background: linear-gradient(90deg, var(--primary-1) 10%, var(--primary-2) 100%);
             color: var(--header-text);
             font-weight: 700;
             font-size: 1.05rem;
@@ -79,7 +94,8 @@
         }
 
         .logo {
-            max-height: 56px
+            max-height: 72px;
+            filter: drop-shadow(0 8px 18px rgba(0, 191, 255, 0.15));
         }
 
         #theme-toggle {
@@ -117,7 +133,7 @@
         }
 
         .form-control:focus {
-            box-shadow: 0 0 0 0.15rem rgba(0, 214, 165, 0.12);
+            box-shadow: 0 0 0 0.15rem rgba(0, 212, 255, 0.15);
             border-color: var(--accent);
             outline: none
         }
@@ -175,7 +191,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="header-left">
-                            <img src="{{ asset('images/yawouch.png') }}" class="logo">
+                            <img src="{{ asset('images/logo2.png') }}" class="logo">
                             <div class="title">
                                 <div class="main">@yield('card_title')</div>
                                 <div class="sub">@yield('card_sub')</div>
@@ -189,6 +205,7 @@
 
                     <div class="card-body">
                         @yield('card_body')
+                        @include('footer')
                     </div>
                 </div>
             </div>

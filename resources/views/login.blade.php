@@ -1,8 +1,8 @@
 @extends('layouts.auth')
 
-@section('title', 'Login - yawOuch')
-@section('card_title', 'Login')
-@section('card_sub', '')
+@section('title', 'JNL System')
+@section('card_title', 'JNL System')
+@section('card_sub', 'Login')
 
 @section('card_body')
     @if($errors->any())
@@ -31,6 +31,4 @@
         <p class="mb-1 text-muted">Don't have an account?</p>
         <a href="{{ url('/register') }}" class="btn btn-outline-light btn-sm">Register</a>
     </div>
-
-    <div class="text-center mt-3"><small>&copy; {{ date('Y') }}</small></div>
 @endsection

@@ -43,6 +43,4 @@
         <p class="mb-1 text-muted">Already have an account?</p>
         <a href="{{ url('/login') }}" class="btn btn-outline-light btn-sm">Login</a>
     </div>
-
-    <div class="text-center mt-3"><small>&copy; {{ date('Y') }}</small></div>
 @endsection
