@@ -27,18 +27,17 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect('/login');
+        return redirect()->route('login')->with('success', 'Logout Success!');
     }
 
     public function login(Request $request)
     {
         $request->validate([
-            'id' => 'required|numeric',
+            'user_id' => 'required|string',
             'password' => 'required|string'
         ]);
 
-        // find user by the id field (adjust column name if necessary)
-        $user = User::where('id', $request->input('id'))->first();
+        $user = User::where('user_id', $request->user_id)->first();
 
         if (!$user) {
             return back()->withErrors([
@@ -46,37 +45,42 @@ class AuthController extends Controller
             ]);
         }
 
-        // check password against the stored hash
-        if (!Hash::check($request->input('password'), $user->password)) {
+        if (!Hash::check($request->password, $user->password)) {
             return back()->withErrors([
                 'password' => 'Password is incorrect.',
             ]);
         }
 
-        // credentials OK — log the user in
         Auth::login($user);
-
-        return redirect('/welcome');
+        return redirect()->route('welcome')->with('success', 'Login Success!');
     }
 
     public function register(Request $request)
     {
         $request->validate([
-            'id' => 'required|numeric|unique:users,id',
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|max:255',
-            'password' => 'required|string|confirmed|min:8',
+            'user_id' => 'required|numeric|unique:users,user_id',
+            'first_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|email:rfc,dns|max:255',
+            'password' => 'required|string|confirmed|min:8|regex:/[A-Z]/|regex:/[0-9]/',
+        ], [
+            'user_id.unique' => 'This ID is already taken.',
+            'email.email' => 'Please enter a valid email address.',
+            'password.confirmed' => 'Passwords do not match.',
+            'password.min' => 'Password must be at least 8 characters long.',
+            'password.regex' => 'Password must contain at least one uppercase letter and one number.',
         ]);
 
-        $user = new User();
-        $user->id = $request->input('id');
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('password'));
-        $user->save();
+        User::create([
+            'user_id' => $request->user_id,
+            'first_name' => $request->first_name,
+            'middle_name' => $request->middle_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
 
-        Auth::login($user);
-
-        return redirect('/welcome');
+        return redirect()->route('login')->with('success', 'Account Created!');
     }
 }

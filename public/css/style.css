@@ -1,0 +1,371 @@
+/* ===========================================
+   BASE THEME VARIABLES
+   =========================================== */
+:root {
+    --bg: #0a0e1a;
+    --card: rgba(15, 21, 32, 0.72);
+    --card-border: rgba(0, 191, 255, 0.25);
+    --muted: #a8b5c8;
+
+    --primary-1: #001a33;
+    --primary-2: #00bfff;
+    --accent: #00d4ff;
+
+    --input-bg: rgba(17, 29, 46, 0.75);
+    --text: #e8ecf5;
+    --header-text: #fff;
+
+    --btn-outline: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] {
+    --bg: #f0f4fa;
+    --card: rgba(255, 255, 255, 0.9);
+    --card-border: rgba(0, 153, 204, 0.25);
+    --muted: #4a5f7f;
+
+    --primary-1: #003d7a;
+    --primary-2: #0099cc;
+    --accent: #0088bb;
+
+    --input-bg: rgba(245, 248, 252, 0.8);
+    --text: #0a0e1a;
+    --header-text: #fff;
+    --btn-outline: rgba(0, 0, 0, 0.1);
+}
+
+/* ===========================================
+   GLOBAL BACKGROUND + ANIMATION
+   =========================================== */
+body {
+    min-height: 100vh;
+    background: radial-gradient(
+            circle at 12% 12%,
+            rgba(0, 191, 255, 0.12),
+            transparent 12%
+        ),
+        radial-gradient(
+            circle at 88% 32%,
+            rgba(0, 191, 255, 0.08),
+            transparent 18%
+        ),
+        var(--bg);
+    color: var(--text);
+    font-family: "Exo 2", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.7s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===========================================
+   CARD (GLASS + GLOW EFFECT)
+   =========================================== */
+.card {
+    background: var(--card);
+    border-radius: 18px;
+    padding-bottom: 15px;
+    backdrop-filter: blur(14px);
+    border: 1px solid var(--card-border);
+
+    box-shadow: 0 8px 30px rgba(0, 191, 255, 0.15),
+        0 4px 15px rgba(0, 0, 0, 0.32);
+
+    animation: cardFade 0.6s ease-out;
+}
+
+@keyframes cardFade {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ===========================================
+   HEADER — ANIMATED GRADIENT + GLOW
+   =========================================== */
+.card-header {
+    background: linear-gradient(90deg, var(--primary-1), var(--primary-2));
+    color: var(--header-text);
+    font-weight: 700;
+    padding: 16px 20px;
+    border-radius: 18px 18px 0 0;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* subtle moving gradient animation */
+.card-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transform: translateX(-100%);
+    animation: headerShine 3s linear infinite;
+}
+
+@keyframes headerShine {
+    0% {
+        transform: translateX(-100%);
+    }
+    60% {
+        transform: translateX(200%);
+    }
+    100% {
+        transform: translateX(200%);
+    }
+}
+
+/* ===========================================
+   INPUTS — MODERN CYBER BORDER + FOCUS GLOW
+   =========================================== */
+.form-control {
+    background: var(--input-bg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 10px 12px;
+    color: var(--text);
+    border-radius: 10px;
+    transition: 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.22);
+    transform: translateY(-1px);
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* ===========================================
+   BUTTONS — GLOW + SMOOTH HOVER
+   =========================================== */
+.btn-primary {
+    background: linear-gradient(180deg, var(--primary-1), var(--primary-2));
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px 14px;
+    border-radius: 10px;
+    transition: 0.25s ease;
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 12px rgba(0, 212, 255, 0.6);
+}
+.btn-outline-light {
+    color: var(--text) !important;
+    border-color: var(--btn-outline) !important;
+    background: transparent !important;
+    font-weight: 600;
+}
+.btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+}
+
+/* ===========================================
+   PASSWORD TOGGLE BUTTON
+   =========================================== */
+.toggle-password {
+    font-size: 1.1rem;
+    background: transparent !important;
+    border-color: var(--btn-outline) !important;
+    transition: 0.2s;
+}
+
+.toggle-password:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    transform: translateY(-2px);
+}
+
+/* ===========================================
+   HEADER LEFT GROUP (logo + title)
+   =========================================== */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* ===========================================
+   LOGO
+   =========================================== */
+.logo {
+    max-height: 72px;
+    filter: drop-shadow(0 8px 18px rgba(0, 191, 255, 0.15));
+    transition: 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.03);
+    filter: drop-shadow(0 10px 24px rgba(0, 191, 255, 0.25));
+}
+
+/* ===========================================
+   THEME TOGGLE BUTTON
+   =========================================== */
+#theme-toggle {
+    width: 44px;
+    height: 34px;
+    padding: 0;
+    border-radius: 8px;
+    border: 1px solid var(--btn-outline);
+    background: transparent;
+    color: var(--text);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 16px;
+    transition: 0.25s ease;
+}
+
+#theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.22);
+}
+
+/* ===========================================
+   LABELS
+   =========================================== */
+.form-label {
+    color: var(--text) !important;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+/* Light mode placeholder fix */
+[data-theme="light"] .form-control::placeholder {
+    color: rgba(15, 23, 36, 0.45);
+}
+
+/* ===========================================
+   TEXT COLORS
+   =========================================== */
+.card-body small,
+.card-body .text-muted {
+    color: var(--muted) !important;
+}
+
+/* ===========================================
+   SMALL OUTLINE BUTTON (Register / Login links)
+   =========================================== */
+.text-center .btn-outline-light {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.85rem;
+    transition: 0.25s ease;
+}
+
+.text-center .btn-outline-light:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ===========================================
+   TITLES
+   =========================================== */
+.title .main {
+    font-family: "Orbitron", sans-serif !important;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    font-size: 1.15rem;
+}
+
+.title .sub {
+    font-family: "Exo 2", sans-serif !important;
+    font-size: 0.9rem;
+    opacity: 0.85;
+}
+
+/* ===========================================
+   TRANSITION STYLES
+   =========================================== */
+html,
+body,
+.card,
+.form-control,
+.btn,
+.card-header,
+.logo,
+#theme-toggle {
+    transition: background-color 0.35s ease, color 0.35s ease,
+        border-color 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
+}
+
+/* Fix transition lag for inputs */
+.form-control {
+    transition: background-color 0.35s ease, border-color 0.35s ease,
+        color 0.35s ease, box-shadow 0.25s ease;
+}
+
+/* Prevent image flashing */
+.logo {
+    transition: filter 0.4s ease, transform 0.25s ease;
+}
+
+/* Slight slower transition for card glass blur */
+.card {
+    transition: background-color 0.45s ease, border-color 0.45s ease,
+        box-shadow 0.45s ease, backdrop-filter 0.45s ease;
+}
+
+/* Theme toggle button smooth feeling */
+#theme-toggle {
+    transition: 0.3s ease;
+}
+
+/* Small text */
+.text-muted,
+small {
+    transition: color 0.35s ease;
+}
+.theme-transition * {
+    transition: background-color 0.35s ease, color 0.35s ease,
+        border-color 0.35s ease, box-shadow 0.35s ease !important;
+}
+
+/* ===========================================
+   RESPONSIVE STYLES
+   =========================================== */
+@media (max-width: 576px) {
+    .card {
+        margin: 10px;
+        border-radius: 16px;
+    }
+    .card-header {
+        padding: 14px 16px;
+    }
+    .card-body {
+        padding: 24px 18px;
+    }
+    .logo {
+        max-height: 60px;
+    }
+}
