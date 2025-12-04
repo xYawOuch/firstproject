@@ -1,30 +1,9 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const btn = document.getElementById("theme-toggle");
-    const icon = document.getElementById("theme-icon");
+document.getElementById("theme-toggle").onclick = () => {
+    const html = document.documentElement;
+    const newTheme = html.dataset.theme === "dark" ? "light" : "dark";
+    html.dataset.theme = newTheme;
+    localStorage.setItem("theme", newTheme);
+};
 
-    function current() {
-        return localStorage.getItem("theme") || "dark";
-    }
-
-    function apply(theme) {
-        // Smooth transition class
-        document.documentElement.classList.add("theme-transition");
-
-        document.documentElement.setAttribute("data-theme", theme);
-        localStorage.setItem("theme", theme);
-        btn.setAttribute("aria-pressed", theme === "light");
-        icon.textContent = theme === "light" ? "☀️" : "🌙";
-
-        // Remove class after animation
-        setTimeout(() => {
-            document.documentElement.classList.remove("theme-transition");
-        }, 350);
-    }
-
-    btn.addEventListener("click", () => {
-        apply(current() === "dark" ? "light" : "dark");
-    });
-
-    // Initial load
-    apply(current());
-});
+document.documentElement.dataset.theme =
+    localStorage.getItem("theme") || "light";
