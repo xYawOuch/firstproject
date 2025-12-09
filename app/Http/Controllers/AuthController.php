@@ -9,9 +9,9 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function showHome()
+    public function showDashboard()
     {
-        return view('home');
+        return view('dashboard');
     }
 
     public function showLogin()
@@ -52,7 +52,7 @@ class AuthController extends Controller
         }
 
         Auth::login($user);
-        return redirect()->route('home')->with('success', 'Login Success!');
+        return redirect()->route('dashboard')->with('success', 'Login Success!');
     }
 
     public function register(Request $request)
@@ -85,7 +85,7 @@ class AuthController extends Controller
     }
 
 
-    
+
     public function attendance()
     {
         return view('attendance');

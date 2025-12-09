@@ -17,7 +17,7 @@ Route::middleware('guest')->group(function () {
 
 // authenticated area
 Route::middleware('auth')->group(function () {
-    Route::get('/home', [AuthController::class, 'showHome'])->name('home');
+    Route::get('/dashboard', [AuthController::class, 'showDashboard'])->name('dashboard');
     Route::get('/attendance', [AuthController::class, 'attendance'])->name('attendance');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

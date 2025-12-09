@@ -1,9 +1,22 @@
-document.getElementById("theme-toggle").onclick = () => {
+document.addEventListener("DOMContentLoaded", () => {
     const html = document.documentElement;
-    const newTheme = html.dataset.theme === "dark" ? "light" : "dark";
-    html.dataset.theme = newTheme;
-    localStorage.setItem("theme", newTheme);
-};
+    const toggleBtn = document.getElementById("theme-toggle");
+    const icon = document.getElementById("theme-icon");
 
-document.documentElement.dataset.theme =
-    localStorage.getItem("theme") || "light";
+    // 1. Load theme from localStorage
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    html.setAttribute("data-theme", savedTheme);
+    icon.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+
+    // 2. Toggle theme + icon
+    toggleBtn.addEventListener("click", () => {
+        const currentTheme = html.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+        html.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+
+        // update icon
+        icon.textContent = newTheme === "dark" ? "☀️" : "🌙";
+    });
+});

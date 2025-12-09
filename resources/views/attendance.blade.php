@@ -1,21 +1,18 @@
-@extends('layouts.hris')
+@extends('layouts.home')
 
 @section('title', 'Attendance')
 
 @section('content')
     <div class="container-fluid mt-4">
 
-        <h2 class="fw-bold mb-4" style="font-family:'Orbitron',sans-serif;color:var(--accent);">
-            Today's Attendance Summary
-        </h2>
+        <h2 class="page-title mb-4">Today's Attendance Summary</h2>
 
         {{-- Summary Cards --}}
         <div class="row g-4">
 
             {{-- DATE --}}
             <div class="col-md-4">
-                <div class="p-3 rounded-3"
-                    style="background:var(--card);border:1px solid var(--card-border);box-shadow:0 6px 18px rgba(0,212,255,0.08);">
+                <div class="hris-card">
                     <h6 class="text-muted">Date</h6>
                     <h3 class="fw-bold">Dec 04, 2025</h3>
                 </div>
@@ -23,20 +20,15 @@
 
             {{-- STATUS --}}
             <div class="col-md-4">
-                <div class="p-3 rounded-3"
-                    style="background:var(--card);border:1px solid var(--card-border);box-shadow:0 6px 18px rgba(0,212,255,0.08);">
+                <div class="hris-card">
                     <h6 class="text-muted">Status</h6>
-                    <span class="badge px-4 py-2 fs-6"
-                        style="background:rgba(0,212,255,0.15);color:var(--accent);border:1px solid var(--card-border);">
-                        Present
-                    </span>
+                    <span class="hris-badge hris-badge-accent">Present</span>
                 </div>
             </div>
 
             {{-- TOTAL HOURS --}}
             <div class="col-md-4">
-                <div class="p-3 rounded-3"
-                    style="background:var(--card);border:1px solid var(--card-border);box-shadow:0 6px 18px rgba(0,212,255,0.08);">
+                <div class="hris-card">
                     <h6 class="text-muted">Total Hours</h6>
                     <h3 class="fw-bold">08:45 hrs</h3>
                 </div>
@@ -44,8 +36,7 @@
 
             {{-- TIME IN --}}
             <div class="col-md-4">
-                <div class="p-3 rounded-3"
-                    style="background:var(--card);border:1px solid var(--card-border);box-shadow:0 6px 18px rgba(0,212,255,0.08);">
+                <div class="hris-card">
                     <h6 class="text-muted">Time In</h6>
                     <h3 class="fw-bold">08:15 AM</h3>
                 </div>
@@ -53,8 +44,7 @@
 
             {{-- TIME OUT --}}
             <div class="col-md-4">
-                <div class="p-3 rounded-3"
-                    style="background:var(--card);border:1px solid var(--card-border);box-shadow:0 6px 18px rgba(0,212,255,0.08);">
+                <div class="hris-card">
                     <h6 class="text-muted">Time Out</h6>
                     <h3 class="fw-bold">05:00 PM</h3>
                 </div>
@@ -62,9 +52,7 @@
 
             {{-- LATE / UNDERTIME / OT --}}
             <div class="col-md-4">
-                <div class="p-3 rounded-3"
-                    style="background:var(--card);border:1px solid var(--card-border);box-shadow:0 6px 18px rgba(0,212,255,0.08);">
-
+                <div class="hris-card">
                     <div class="d-flex justify-content-between text-center">
                         <div>
                             <h6 class="text-muted">Late</h6>
@@ -85,17 +73,15 @@
         </div>
     </div>
 
+
     {{-- Attendance Table --}}
     <div class="container-fluid mt-5">
-        <h2 class="fw-bold mb-3" style="font-family:'Orbitron',sans-serif;color:var(--accent);">
-            Attendance Records
-        </h2>
+        <h2 class="page-title mb-3">Attendance Records</h2>
 
-        <div class="rounded-3"
-            style="background:var(--card);border:1px solid var(--card-border);box-shadow:0 6px 18px rgba(0,212,255,0.12);">
+        <div class="hris-table-wrapper">
             <div class="table-responsive">
-                <table class="table mb-0 align-middle text-center" style="color:var(--text);">
-                    <thead style="background:rgba(0,212,255,0.12);color:var(--accent);font-family:'Orbitron',sans-serif;">
+                <table class="table table-hover align-middle text-center hris-table">
+                    <thead class="hris-table-head">
                         <tr>
                             <th>Date</th>
                             <th>Time In</th>
@@ -116,10 +102,7 @@
                             <td>08:15 AM</td>
                             <td>05:00 PM</td>
                             <td>
-                                <span class="badge"
-                                    style="background:rgba(0,212,255,0.18);color:var(--accent);border:1px solid var(--card-border);">
-                                    Present
-                                </span>
+                                <span class="hris-badge hris-badge-accent">Present</span>
                             </td>
                             <td>15 mins</td>
                             <td>0 mins</td>
@@ -133,9 +116,7 @@
                             <td>2025-12-03</td>
                             <td>—</td>
                             <td>—</td>
-                            <td>
-                                <span class="badge bg-danger">Absent</span>
-                            </td>
+                            <td><span class="hris-badge hris-badge-red">Absent</span></td>
                             <td>0</td>
                             <td>0</td>
                             <td>0</td>
@@ -148,9 +129,7 @@
                             <td>2025-12-02</td>
                             <td>01:00 PM</td>
                             <td>05:00 PM</td>
-                            <td>
-                                <span class="badge bg-warning text-dark">Leave</span>
-                            </td>
+                            <td><span class="hris-badge hris-badge-yellow">Leave</span></td>
                             <td>0</td>
                             <td>0</td>
                             <td>0</td>
@@ -163,5 +142,4 @@
             </div>
         </div>
     </div>
-
 @endsection
