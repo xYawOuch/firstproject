@@ -24,11 +24,15 @@ class AuthController extends Controller
         return view('register');
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
-        return redirect()->route('login')->with('success', 'Logout Success!');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login')->with('success', 'You have logged out.');
     }
+
 
     public function login(Request $request)
     {
