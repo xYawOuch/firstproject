@@ -559,3 +559,113 @@ html.theme-fade {
         transform: translateY(0);
     }
 }
+
+/* =======================================================
+   RESPONSIVE LAYOUT FIX (SIDEBAR + CONTENT)
+======================================================= */
+
+/* Tablet & below */
+@media (max-width: 992px) {
+    /* Sidebar becomes hidden off-screen */
+    .hris-sidebar {
+        width: 220px;
+        transform: translateX(-100%);
+        position: fixed;
+        z-index: 999;
+        height: 100%;
+        transition: transform 0.35s ease;
+    }
+
+    /* Sidebar visible when toggled */
+    .hris-sidebar.active {
+        transform: translateX(0);
+    }
+
+    /* Main content full width */
+    .main-content {
+        margin-left: 0 !important;
+        padding: 18px;
+    }
+
+    /* Add a top bar for hamburger */
+    .hris-topbar {
+        height: 58px;
+        display: flex;
+        align-items: center;
+        padding: 0 18px;
+        background: var(--card);
+        border-bottom: 1px solid var(--card-border);
+        box-shadow: var(--shadow-soft);
+        position: sticky;
+        top: 0;
+        z-index: 998;
+    }
+
+    /* Hamburger icon */
+    .hris-burger {
+        font-size: 1.6rem;
+        cursor: pointer;
+        color: var(--accent);
+        margin-right: 16px;
+    }
+
+    /* Logo inside topbar if needed */
+    .hris-topbar-title {
+        font-family: "Orbitron", sans-serif;
+        color: var(--accent);
+        font-weight: 700;
+        font-size: 1.2rem;
+    }
+}
+
+/* Mobile sizes */
+@media (max-width: 576px) {
+    .card {
+        margin: 12px 6px;
+    }
+
+    .page-title {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+
+    .hris-card {
+        padding: 14px;
+    }
+
+    .nav-item {
+        padding: 10px 12px;
+        font-size: 0.95rem;
+    }
+
+    .sidebar-logo {
+        max-width: 58px;
+    }
+
+    .sidebar-header h2 {
+        font-size: 1.1rem;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 400px) {
+    .page-title {
+        font-size: 1.1rem;
+    }
+
+    .hris-card {
+        padding: 12px;
+    }
+}
+
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 998;
+}
+
+.sidebar-overlay.active {
+    display: block;
+}

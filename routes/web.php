@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AttendanceController;
+
 
 // redirect root to login
 Route::redirect('/', '/login');
@@ -18,6 +20,7 @@ Route::middleware('guest')->group(function () {
 // authenticated area
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [AuthController::class, 'showDashboard'])->name('dashboard');
-    Route::get('/attendance', [AuthController::class, 'attendance'])->name('attendance');
+    // Route::get('/attendance', [AuthController::class, 'attendance'])->name('attendance');
+    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

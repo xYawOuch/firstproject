@@ -3,6 +3,20 @@
 @section('title', 'Attendance')
 
 @section('content')
+    @php
+        // safe summary pre-computation to avoid complex inline expressions
+        $first = $attendances->first();
+
+        $summaryDate = $first && $first->date ? $first->date->format('M d, Y') : '—';
+        $summaryTimeIn = $first && $first->time_in ? \Carbon\Carbon::parse($first->time_in)->format('h:i A') : '—';
+        $summaryTimeOut = $first && $first->time_out ? \Carbon\Carbon::parse($first->time_out)->format('h:i A') : '—';
+        $summaryStatus = $first->status ?? 'N/A';
+        $summaryTotalHours = $first->total_hours ?? '0 hrs';
+        $summaryLate = $first->late ?? '0';
+        $summaryUndertime = $first->undertime ?? '0';
+        $summaryOvertime = $first->overtime ?? '0';
+    @endphp
+
     <div class="container-fluid mt-4">
 
         <h2 class="page-title mb-4">Today's Attendance Summary</h2>
@@ -14,7 +28,7 @@
             <div class="col-md-4">
                 <div class="hris-card">
                     <h6 class="text-muted">Date</h6>
-                    <h3 class="fw-bold">Dec 04, 2025</h3>
+                    <h3 class="fw-bold">{{ $summaryDate }}</h3>
                 </div>
             </div>
 
@@ -22,7 +36,15 @@
             <div class="col-md-4">
                 <div class="hris-card">
                     <h6 class="text-muted">Status</h6>
-                    <span class="hris-badge hris-badge-accent">Present</span>
+                    @if($summaryStatus === 'Present')
+                        <span class="hris-badge hris-badge-accent">Present</span>
+                    @elseif($summaryStatus === 'Absent')
+                        <span class="hris-badge hris-badge-red">Absent</span>
+                    @elseif($summaryStatus === 'Leave')
+                        <span class="hris-badge hris-badge-yellow">Leave</span>
+                    @else
+                        <span class="hris-badge hris-badge-gray">{{ $summaryStatus }}</span>
+                    @endif
                 </div>
             </div>
 
@@ -30,7 +52,7 @@
             <div class="col-md-4">
                 <div class="hris-card">
                     <h6 class="text-muted">Total Hours</h6>
-                    <h3 class="fw-bold">08:45 hrs</h3>
+                    <h3 class="fw-bold">{{ $summaryTotalHours }}</h3>
                 </div>
             </div>
 
@@ -38,7 +60,7 @@
             <div class="col-md-4">
                 <div class="hris-card">
                     <h6 class="text-muted">Time In</h6>
-                    <h3 class="fw-bold">08:15 AM</h3>
+                    <h3 class="fw-bold">{{ $summaryTimeIn }}</h3>
                 </div>
             </div>
 
@@ -46,7 +68,7 @@
             <div class="col-md-4">
                 <div class="hris-card">
                     <h6 class="text-muted">Time Out</h6>
-                    <h3 class="fw-bold">05:00 PM</h3>
+                    <h3 class="fw-bold">{{ $summaryTimeOut }}</h3>
                 </div>
             </div>
 
@@ -56,15 +78,15 @@
                     <div class="d-flex justify-content-between text-center">
                         <div>
                             <h6 class="text-muted">Late</h6>
-                            <span class="fw-bold">15 mins</span>
+                            <span class="fw-bold">{{ $summaryLate }}</span>
                         </div>
                         <div>
                             <h6 class="text-muted">Undertime</h6>
-                            <span class="fw-bold">0 mins</span>
+                            <span class="fw-bold">{{ $summaryUndertime }}</span>
                         </div>
                         <div>
                             <h6 class="text-muted">OT</h6>
-                            <span class="fw-bold">1.5 hrs</span>
+                            <span class="fw-bold">{{ $summaryOvertime }}</span>
                         </div>
                     </div>
                 </div>
@@ -95,48 +117,36 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @forelse ($attendances as $row)
+                            <tr>
+                                <td>{{ $row->date?->format('Y-m-d') }}</td>
 
-                        {{-- Present --}}
-                        <tr>
-                            <td>2025-12-04</td>
-                            <td>08:15 AM</td>
-                            <td>05:00 PM</td>
-                            <td>
-                                <span class="hris-badge hris-badge-accent">Present</span>
-                            </td>
-                            <td>15 mins</td>
-                            <td>0 mins</td>
-                            <td>1.5 hrs</td>
-                            <td>8.75 hrs</td>
-                            <td>No</td>
-                        </tr>
+                                {{-- Time in / out formatting done here, single-line to avoid parser issues --}}
+                                <td>{{ $row->time_in ? \Carbon\Carbon::parse($row->time_in)->format('h:i A') : '—' }}</td>
+                                <td>{{ $row->time_out ? \Carbon\Carbon::parse($row->time_out)->format('h:i A') : '—' }}</td>
 
-                        {{-- Absent --}}
-                        <tr>
-                            <td>2025-12-03</td>
-                            <td>—</td>
-                            <td>—</td>
-                            <td><span class="hris-badge hris-badge-red">Absent</span></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>—</td>
-                        </tr>
+                                <td>
+                                    @php $s = strtolower($row->status ?? ''); @endphp
+                                    @if (strpos($s, 'present') !== false)
+                                        <span class="hris-badge hris-badge-accent">Present</span>
+                                    @elseif (strpos($s, 'absent') !== false)
+                                        <span class="hris-badge hris-badge-red">Absent</span>
+                                    @else
+                                        <span class="hris-badge hris-badge-yellow">{{ $row->status }}</span>
+                                    @endif
+                                </td>
 
-                        {{-- Leave --}}
-                        <tr>
-                            <td>2025-12-02</td>
-                            <td>01:00 PM</td>
-                            <td>05:00 PM</td>
-                            <td><span class="hris-badge hris-badge-yellow">Leave</span></td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>0</td>
-                            <td>4 hrs</td>
-                            <td>Yes</td>
-                        </tr>
-
+                                <td>{{ $row->late }}</td>
+                                <td>{{ $row->undertime }}</td>
+                                <td>{{ $row->overtime }}</td>
+                                <td>{{ $row->total_hours }}</td>
+                                <td>{{ $row->half_day ?? '—' }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="9" class="text-center py-4">No attendance records found.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
