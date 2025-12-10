@@ -15,15 +15,15 @@
             <i class="bi bi-calendar-check"></i> Attendance
         </a>
 
-        <a href="/employees" class="nav-item {{ request()->is('employees') ? 'active' : '' }}">
+        <a href="#" class="nav-item {{ request()->is('employees') ? 'active' : '' }}">
             <i class="bi bi-people"></i> Employees
         </a>
 
-        <a href="/payroll" class="nav-item {{ request()->is('payroll') ? 'active' : '' }}">
+        <a href="#" class="nav-item {{ request()->is('payroll') ? 'active' : '' }}">
             <i class="bi bi-cash-coin"></i> Payroll
         </a>
 
-        <a href="/reports" class="nav-item {{ request()->is('reports') ? 'active' : '' }}">
+        <a href="#" class="nav-item {{ request()->is('reports') ? 'active' : '' }}">
             <i class="bi bi-bar-chart"></i> Reports
         </a>
     </nav>
