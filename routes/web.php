@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\EmployeeAttendanceV2Controller;
 
 
 // redirect root to login
@@ -21,6 +21,9 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [AuthController::class, 'showDashboard'])->name('dashboard');
     // Route::get('/attendance', [AuthController::class, 'attendance'])->name('attendance');
-    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+    // Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+
+    Route::get('/attendance', [EmployeeAttendanceV2Controller::class, 'index'])->name('attendance');
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

@@ -5,13 +5,15 @@
 @section('content')
     @php
         // safe summary pre-computation to avoid complex inline expressions
-        $first = $attendances->first();
+        $first = $attendance->first();
 
         $summaryDate = $first && $first->date ? $first->date->format('M d, Y') : '—';
         $summaryTimeIn = $first && $first->time_in ? \Carbon\Carbon::parse($first->time_in)->format('h:i A') : '—';
         $summaryTimeOut = $first && $first->time_out ? \Carbon\Carbon::parse($first->time_out)->format('h:i A') : '—';
         $summaryStatus = $first->status ?? 'N/A';
-        $summaryTotalHours = $first->total_hours ?? '0 hrs';
+        $summaryTotalHours = $first
+            ? floor($first->total_minutes / 60) . 'h ' . ($first->total_minutes % 60) . 'm'
+            : '0h 0m';
         $summaryLate = $first->late ?? '0';
         $summaryUndertime = $first->undertime ?? '0';
         $summaryOvertime = $first->overtime ?? '0';
@@ -117,7 +119,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($attendances as $row)
+                        @forelse ($attendance as $row)
                             <tr>
                                 <td>{{ $row->date?->format('Y-m-d') }}</td>
 
@@ -139,7 +141,10 @@
                                 <td>{{ $row->late }}</td>
                                 <td>{{ $row->undertime }}</td>
                                 <td>{{ $row->overtime }}</td>
-                                <td>{{ $row->total_hours }}</td>
+                                <td>
+                                    {{ floor($row->total_minutes / 60) }}h
+                                    {{ $row->total_minutes % 60 }}m
+                                </td>
                                 <td>{{ $row->half_day ?? '—' }}</td>
                             </tr>
                         @empty
